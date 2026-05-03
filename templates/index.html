@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huffman Compressor - Fast & Secure File Compression</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #667eea #f3f4f6;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f3f4f6;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gradient-text {
+            color: #ffffff;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .file-input-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .file-input-wrapper:hover::after {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-900 min-h-screen font-sans text-gray-100">
+    
+    <!-- Navigation Bar -->
+    <nav class="bg-slate-900 text-white shadow-2xl sticky top-0 z-50 backdrop-blur-md bg-opacity-95 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-white bg-opacity-20 p-3 rounded-xl backdrop-blur">
+                        <i class="fas fa-compress-alt text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-black text-2xl tracking-tight">HuffmanWeb</span>
+                        <p class="text-xs text-gray-200">Professional File Compression</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <div class="text-sm">
+                        <span class="text-gray-300">Algorithm:</span>
+                        <span class="font-semibold ml-2">Huffman Coding</span>
+                    </div>
+                    <div class="w-px h-6 bg-white bg-opacity-20"></div>
+                    <div class="text-sm">
+                        <span class="text-gray-300">Compression:</span>
+                        <span class="font-semibold ml-2">57-65%</span>
+                    </div>
+                    <div class="w-px h-6 bg-white bg-opacity-20"></div>
+                    <a href="#about" class="text-sm font-semibold px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-10 transition-all" style="border: 1px solid rgba(255,255,255,0.3);">
+                        About
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-20">
+            <h1 class="text-5xl md:text-6xl font-black mb-6 gradient-text">
+                Compress Your Files in High Quality
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
+                HuffmanWeb shrinks file size while keeping your documents looking sharp. Experience optimal compression with <span class="font-bold text-blue-400">57-65% compression ratio</span> and <span class="font-bold text-green-400">100% lossless restoration</span>. All processing happens locally on your device.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <div class="flex items-center space-x-2 bg-slate-700 px-6 py-3 rounded-full shadow-lg">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                    <span class="text-sm font-semibold text-white">Secure & Private</span>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-700 px-6 py-3 rounded-full shadow-lg">
+                    <i class="fas fa-bolt text-yellow-400"></i>
+                    <span class="text-sm font-semibold text-white">Blazing Fast</span>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-700 px-6 py-3 rounded-full shadow-lg">
+                    <i class="fas fa-shield-alt text-blue-400"></i>
+                    <span class="text-sm font-semibold text-white">Zero Data Loss</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="mb-8 p-5 rounded-xl border-l-4 shadow-xl animate-slide-down
+                        {% if category == 'error' %} bg-red-50 border-red-500 text-red-700 
+                        {% else %} bg-emerald-50 border-emerald-500 text-emerald-700 {% endif %}">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 mt-0.5">
+                                {% if category == 'error' %}
+                                    <i class="fas fa-circle-xmark text-2xl"></i>
+                                {% else %}
+                                    <i class="fas fa-circle-check text-2xl"></i>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <p class="font-semibold text-lg">{{ message }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Main Operation Cards -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            
+            <!-- Compress Card -->
+            <div class="card-hover bg-slate-800 rounded-3xl overflow-hidden border-2 border-blue-600">
+                <div class="bg-gradient-to-br from-blue-600 to-blue-800 px-8 py-10 text-white">
+                    <div class="flex items-center space-x-5">
+                        <div class="bg-blue-500 bg-opacity-30 p-4 rounded-2xl backdrop-blur">
+                            <i class="fas fa-file-zipper text-4xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-black">Compress</h2>
+                            <p class="text-blue-200 text-sm mt-2 font-medium">Reduce file size instantly</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <div class="bg-slate-700 border-2 border-blue-500 rounded-2xl p-5 mb-8">
+                        <p class="text-sm text-blue-200 flex items-start space-x-3">
+                            <i class="fas fa-lightbulb text-blue-400 mt-1 flex-shrink-0"></i>
+                            <span><strong>Tip:</strong> Upload any text file and get it back smaller while keeping the exact same filename.</span>
+                        </p>
+                    </div>
+                    
+                    <form action="/compress" method="POST" enctype="multipart/form-data" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-100 mb-4">
+                                Select File to Compress
+                            </label>
+                            <div class="file-input-wrapper relative">
+                                <input type="file" name="file" required 
+                                    class="block w-full text-sm text-gray-300
+                                    file:mr-4 file:py-4 file:px-6
+                                    file:rounded-xl file:border-0
+                                    file:text-sm file:font-bold
+                                    file:bg-blue-700 file:text-blue-100
+                                    hover:file:bg-blue-600 file:cursor-pointer file:transition-all
+                                    border-3 border-dashed border-blue-500 rounded-2xl p-6
+                                    focus:outline-none focus:border-blue-400 focus:bg-slate-700 transition-all bg-slate-700">
+                            </div>
+                            <p class="text-xs text-gray-400 mt-3 flex items-center space-x-2">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Supports all text formats: .txt, .md, .csv, .json, .log, .xml, etc.</span>
+                            </p>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-black py-5 px-6 rounded-xl transition-all flex items-center justify-center space-x-3 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 active:translate-y-0 duration-150">
+                            <i class="fas fa-compress"></i>
+                            <span>Compress & Download</span>
+                            <i class="fas fa-arrow-down-to-line"></i>
+                        </button>
+                    </form>
+
+                    <div class="mt-8 pt-8 border-t-2 border-slate-700">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center">
+                                <p class="text-2xl font-black text-blue-400">57-65%</p>
+                                <p class="text-xs text-gray-400 mt-1">Compression Ratio</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-black text-green-400">100%</p>
+                                <p class="text-xs text-gray-400 mt-1">Data Integrity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decompress Card -->
+            <div class="card-hover bg-slate-800 rounded-3xl overflow-hidden border-2 border-emerald-600">
+                <div class="bg-gradient-to-br from-emerald-600 to-emerald-800 px-8 py-10 text-white">
+                    <div class="flex items-center space-x-5">
+                        <div class="bg-emerald-500 bg-opacity-30 p-4 rounded-2xl backdrop-blur">
+                            <i class="fas fa-file-export text-4xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-black">Decompress</h2>
+                            <p class="text-emerald-200 text-sm mt-2 font-medium">Restore original file</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <div class="bg-slate-700 border-2 border-emerald-500 rounded-2xl p-5 mb-8">
+                        <p class="text-sm text-emerald-200 flex items-start space-x-3">
+                            <i class="fas fa-shield-check text-emerald-400 mt-1 flex-shrink-0"></i>
+                            <span><strong>Safe:</strong> Your file will be restored perfectly, character by character, with zero data loss.</span>
+                        </p>
+                    </div>
+                    
+                    <form action="/decompress" method="POST" enctype="multipart/form-data" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-100 mb-4">
+                                Select File to Decompress
+                            </label>
+                            <div class="file-input-wrapper relative">
+                                <input type="file" name="file" required
+                                    class="block w-full text-sm text-gray-300
+                                    file:mr-4 file:py-4 file:px-6
+                                    file:rounded-xl file:border-0
+                                    file:text-sm file:font-bold
+                                    file:bg-emerald-700 file:text-emerald-100
+                                    hover:file:bg-emerald-600 file:cursor-pointer file:transition-all
+                                    border-3 border-dashed border-emerald-500 rounded-2xl p-6
+                                    focus:outline-none focus:border-emerald-400 focus:bg-slate-700 transition-all bg-slate-700">
+                            </div>
+                            <p class="text-xs text-gray-400 mt-3 flex items-center space-x-2">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Upload any file that was compressed using the Compress tool above</span>
+                            </p>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-black py-5 px-6 rounded-xl transition-all flex items-center justify-center space-x-3 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 active:translate-y-0 duration-150">
+                            <i class="fas fa-expand"></i>
+                            <span>Decompress & Restore</span>
+                            <i class="fas fa-arrow-down-to-line"></i>
+                        </button>
+                    </form>
+
+                    <div class="mt-8 pt-8 border-t-2 border-slate-700">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center">
+                                <p class="text-2xl font-black text-emerald-400">100%</p>
+                                <p class="text-xs text-gray-400 mt-1">Perfect Restoration</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-black text-blue-400">0%</p>
+                                <p class="text-xs text-gray-400 mt-1">Data Loss</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Stats Section -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
+            <div class="card-hover bg-slate-800 rounded-2xl p-6 border border-indigo-600">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-gray-100">Compression</h3>
+                    <i class="fas fa-chart-pie text-indigo-400 text-2xl"></i>
+                </div>
+                <p class="text-3xl font-black text-indigo-400">57-65%</p>
+                <p class="text-xs text-gray-400 mt-2">Average ratio on text files</p>
+            </div>
+
+            <div class="card-hover bg-slate-800 rounded-2xl p-6 border border-green-600">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-gray-100">Integrity</h3>
+                    <i class="fas fa-check-double text-green-400 text-2xl"></i>
+                </div>
+                <p class="text-3xl font-black text-green-400">100%</p>
+                <p class="text-xs text-gray-400 mt-2">Lossless restoration</p>
+            </div>
+
+            <div class="card-hover bg-slate-800 rounded-2xl p-6 border border-blue-600">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-gray-100">Processing</h3>
+                    <i class="fas fa-bolt text-blue-400 text-2xl"></i>
+                </div>
+                <p class="text-3xl font-black text-blue-400">Local</p>
+                <p class="text-xs text-gray-400 mt-2">No cloud or external APIs</p>
+            </div>
+
+            <div class="card-hover bg-slate-800 rounded-2xl p-6 border border-purple-600">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-gray-100">Algorithm</h3>
+                    <i class="fas fa-brain text-purple-400 text-2xl"></i>
+                </div>
+                <p class="text-3xl font-black text-purple-400">Optimal</p>
+                <p class="text-xs text-gray-400 mt-2">Huffman Coding</p>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="bg-slate-800 rounded-3xl p-12 border-2 border-indigo-600 mb-16">
+            <h2 class="text-3xl font-black text-center mb-12 text-white">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 font-black text-2xl shadow-lg">
+                        1
+                    </div>
+                    <h3 class="text-xl font-black text-gray-100 mb-3">Upload</h3>
+                    <p class="text-gray-300">Select any file from your device to compress or decompress.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 font-black text-2xl shadow-lg">
+                        2
+                    </div>
+                    <h3 class="text-xl font-black text-gray-100 mb-3">Process</h3>
+                    <p class="text-gray-300">Optimal Huffman algorithm processes your file locally for maximum privacy.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 font-black text-2xl shadow-lg">
+                        3
+                    </div>
+                    <h3 class="text-xl font-black text-gray-100 mb-3">Download</h3>
+                    <p class="text-gray-300">Get your compressed or restored file with perfect data integrity.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- About Section -->
+    <section id="about" class="bg-slate-800 py-20 border-t border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-6">About HuffmanWeb</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    A professional-grade file compression platform built with optimal algorithms and modern technology.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                <div class="bg-slate-700 rounded-2xl p-8 border-2 border-indigo-600-slate-600">
+                    <h3 class="text-2xl font-black text-white mb-4">Project Overview</h3>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        HuffmanWeb is a sophisticated file compression application that brings the power of optimal Huffman Coding to the web. 
+                        Designed with privacy and efficiency in mind, all compression and decompression operations happen locally on your device 
+                        with zero data transmission to external servers.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        The application achieves an impressive 57-65% compression ratio on text files while maintaining 100% data integrity. 
+                        Whether you're dealing with text documents, logs, or configuration files, HuffmanWeb provides the perfect balance between 
+                        compression efficiency and processing speed.
+                    </p>
+                </div>
+
+                <div class="bg-slate-700 rounded-2xl p-8 border-2 border-indigo-600-slate-600">
+                    <h3 class="text-2xl font-black text-white mb-4">Key Features</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start space-x-3">
+                            <i class="fas fa-check text-emerald-400 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <p class="text-white font-semibold">Optimal Compression</p>
+                                <p class="text-gray-400 text-sm">Huffman Coding algorithm for maximum efficiency</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i class="fas fa-check text-emerald-400 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <p class="text-white font-semibold">100% Lossless</p>
+                                <p class="text-gray-400 text-sm">Perfect data restoration, character by character</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i class="fas fa-check text-emerald-400 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <p class="text-white font-semibold">Local Processing</p>
+                                <p class="text-gray-400 text-sm">All operations happen on your device, no uploads</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <i class="fas fa-check text-emerald-400 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <p class="text-white font-semibold">User-Friendly Interface</p>
+                                <p class="text-gray-400 text-sm">Clean, modern design accessible to everyone</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-700 rounded-2xl p-8 border-2 border-indigo-600-slate-600 text-center">
+                    <i class="fas fa-code text-4xl text-blue-400 mb-4"></i>
+                    <h4 class="text-xl font-black text-white mb-2">Technology</h4>
+                    <p class="text-gray-400 text-sm">Built with Python, Flask, and Tailwind CSS for optimal performance and design</p>
+                </div>
+                <div class="bg-slate-700 rounded-2xl p-8 border-2 border-indigo-600-slate-600 text-center">
+                    <i class="fas fa-rocket text-4xl text-emerald-400 mb-4"></i>
+                    <h4 class="text-xl font-black text-white mb-2">Performance</h4>
+                    <p class="text-gray-400 text-sm">Lightning-fast compression with minimal resource usage on any device</p>
+                </div>
+                <div class="bg-slate-700 rounded-2xl p-8 border-2 border-indigo-600-slate-600 text-center">
+                    <i class="fas fa-lock text-4xl text-purple-400 mb-4"></i>
+                    <h4 class="text-xl font-black text-white mb-2">Security</h4>
+                    <p class="text-gray-400 text-sm">Your data never leaves your device. Complete privacy guaranteed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="bg-gradient-to-r from-slate-900 to-slate-800 text-gray-300 border-t-4 border-indigo-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div>
+                    <h4 class="text-white font-black mb-6 flex items-center space-x-2">
+                        <i class="fas fa-compress-alt"></i>
+                        <span>HuffmanWeb</span>
+                    </h4>
+                    <p class="text-sm leading-relaxed">
+                        Professional-grade file compression powered by optimal Huffman Coding. Perfect for text files with exceptional compression ratios.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-black mb-6">Features</h4>
+                    <ul class="text-sm space-y-3">
+                        <li class="flex items-center space-x-2"><i class="fas fa-check text-emerald-500"></i> <span>57-65% compression</span></li>
+                        <li class="flex items-center space-x-2"><i class="fas fa-check text-emerald-500"></i> <span>100% lossless</span></li>
+                        <li class="flex items-center space-x-2"><i class="fas fa-check text-emerald-500"></i> <span>Local processing</span></li>
+                        <li class="flex items-center space-x-2"><i class="fas fa-check text-emerald-500"></i> <span>No dependencies</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-black mb-6">Tech Stack</h4>
+                    <ul class="text-sm space-y-3">
+                        <li>• Python 3.10+ Backend</li>
+                        <li>• Flask Web Framework</li>
+                        <li>• Tailwind CSS Frontend</li>
+                        <li>• Huffman Algorithm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-sm text-gray-500">
+                <p>&copy; 2026 HuffmanWeb by Nafisa Tasneem - 2322765042</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

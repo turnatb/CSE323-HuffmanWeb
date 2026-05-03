@@ -1,0 +1,61 @@
+
+    The quick brown fox jumps over the lazy dog.
+    This is a test file for Huffman compression.
+    It contains repeated characters and words.
+    Compression should reduce the file size significantly.
+    The Huffman algorithm builds an optimal prefix-free code.
+    
+    The quick brown fox jumps over the lazy dog.
+    This is a test file for Huffman compression.
+    It contains repeated characters and words.
+    Compression should reduce the file size significantly.
+    The Huffman algorithm builds an optimal prefix-free code.
+    
+    The quick brown fox jumps over the lazy dog.
+    This is a test file for Huffman compression.
+    It contains repeated characters and words.
+    Compression should reduce the file size significantly.
+    The Huffman algorithm builds an optimal prefix-free code.
+    
+    The quick brown fox jumps over the lazy dog.
+    This is a test file for Huffman compression.
+    It contains repeated characters and words.
+    Compression should reduce the file size significantly.
+    The Huffman algorithm builds an optimal prefix-free code.
+    
+    The quick brown fox jumps over the lazy dog.
+    This is a test file for Huffman compression.
+    It contains repeated characters and words.
+    Compression should reduce the file size significantly.
+    The Huffman algorithm builds an optimal prefix-free code.
+    
+    The quick brown fox jumps over the lazy dog.
+    This is a test file for Huffman compression.
+    It contains repeated characters and words.
+    Compression should reduce the file size significantly.
+    The Huffman algorithm builds an optimal prefix-free code.
+    
+    The quick brown fox jumps over the lazy dog.
+    This is a test file for Huffman compression.
+    It contains repeated characters and words.
+    Compression should reduce the file size significantly.
+    The Huffman algorithm builds an optimal prefix-free code.
+    
+    The quick brown fox jumps over the lazy dog.
+    This is a test file for Huffman compression.
+    It contains repeated characters and words.
+    Compression should reduce the file size significantly.
+    The Huffman algorithm builds an optimal prefix-free code.
+    
+    The quick brown fox jumps over the lazy dog.
+    This is a test file for Huffman compression.
+    It contains repeated characters and words.
+    Compression should reduce the file size significantly.
+    The Huffman algorithm builds an optimal prefix-free code.
+    
+    The quick brown fox jumps over the lazy dog.
+    This is a test file for Huffman compression.
+    It contains repeated characters and words.
+    Compression should reduce the file size significantly.
+    The Huffman algorithm builds an optimal prefix-free code.
+    
