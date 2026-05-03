@@ -13,6 +13,8 @@
 
 ---
 
+- Live Demo:👇
+http://localhost:5000/
 ## 🎯 About
 
 **HuffmanWeb** is a sophisticated file compression web application that brings the power of **Optimal Huffman Coding** to the browser. Designed with privacy and efficiency in mind, all compression and decompression operations happen **locally on your device** with zero data transmission to external servers.
@@ -269,36 +271,15 @@ d:\7th sem\323nafi project\
 
 ---
 
-## 🖼️ Screenshots
-
 ### Landing Page
-The main interface with Compress and Decompress cards:
-- Dark-themed professional design
-- Clear call-to-action buttons
-- Real-time compression statistics
-- Responsive layout for all devices
+   <img width="1904" height="910" alt="Screenshot 2026-05-03 033251" src="https://github.com/user-attachments/assets/150f6602-3dd4-4d11-996d-bfe138461fa3" />
 
-### Compress Interface
-- **Upload Area** - Drag-and-drop or click to select files
-- **File Info** - Shows file name and status
-- **Compression Metrics** - Displays ratio and file size
-- **Download Button** - One-click download of compressed file
+### Compress Interface & Decompress Interface
+ 
+      <img width="1899" height="903" alt="Screenshot 2026-05-03 033310" src="https://github.com/user-attachments/assets/77571ce6-e9e8-4e65-9471-c3c1d7076277" />
 
-### Decompress Interface
-- **Upload Area** - For `.bin` compressed files
-- **Safety Warnings** - Ensures data integrity
-- **Restore Button** - One-click restoration
-- **Original Data** - Perfect character-by-character recovery
+      <img width="1905" height="908" alt="Screenshot 2026-05-03 033326" src="https://github.com/user-attachments/assets/bc5729ec-1f07-4448-a07a-304518783dfe" />
 
-### Metrics Dashboard
-- **Compression Ratio** - 57-65% average
-- **Data Integrity** - 100% lossless
-- **Processing** - Local (no cloud)
-- **Algorithm** - Optimal Huffman Coding
-
----
-
-## 🔬 Algorithm Details
 
 ### Data Structure: Huffman Node
 ```python
@@ -428,8 +409,8 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 
 **Nafisa Tasneem**
 - Student ID: 2322765042
-- Institution: 7th Semester Project
-- Email: [Your Email]
+- Institution: North South University
+- Email: [nafisa.tasneem.232@northsouth.edu]
 
 ---
 
@@ -459,23 +440,6 @@ python web/app.py
 - Check file permissions
 - Try a smaller test file first
 - Check browser console for errors
-
-### Need Help?
-- 📖 Read the documentation above
-- 🧪 Run the test suite
-- 💭 Check the About section in the web app
-
----
-
-## 🔐 Privacy & Security
-
-- ✅ **100% Local Processing** - No data sent to servers
-- ✅ **No Cookies** - No tracking or analytics
-- ✅ **No Accounts** - No personal information collected
-- ✅ **Open Source** - Full transparency of the code
-- ✅ **Secure** - Uses standard Python libraries
-
----
 
 <div align="center">
 
