@@ -440,10 +440,6 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 
 ---
 
-## 📞 Support
-
-Having issues? Here are some solutions:
-
 ### Application won't start
 ```bash
 # Make sure Python 3.10+ is installed
