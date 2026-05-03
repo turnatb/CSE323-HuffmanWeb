@@ -29,7 +29,9 @@ The application achieves an impressive **57-65% compression ratio** on text file
 ---
 
 ## Video
-https://github.com/turnatb/CSE323-HuffmanWeb/blob/main/image/Video%20Project.mp4
+
+https://github.com/user-attachments/assets/54dd2b34-c747-47cf-b480-86a560dce455
+
 
 ## ✨ Features
 
