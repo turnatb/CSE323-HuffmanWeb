@@ -13,7 +13,8 @@
 
 ---
 
-- Live Demo:👇
+- Live Demo: 
+
 http://localhost:5000/
 ## 🎯 About
 
@@ -35,7 +36,16 @@ The application achieves an impressive **57-65% compression ratio** on text file
 https://github.com/user-attachments/assets/54dd2b34-c747-47cf-b480-86a560dce455
 
 
-## ✨ Features
+### Landing Page
+   <img width="1904" height="910" alt="Screenshot 2026-05-03 033251" src="https://github.com/user-attachments/assets/150f6602-3dd4-4d11-996d-bfe138461fa3" />
+
+### Compress Interface & Decompress Interface
+ 
+<img width="1899" height="903" alt="Screenshot 2026-05-03 033310" src="https://github.com/user-attachments/assets/537859e8-adb8-4235-9db2-9a4ad542908f" />
+
+<img width="1905" height="908" alt="Screenshot 2026-05-03 033326" src="https://github.com/user-attachments/assets/9e49f1c9-ced3-4968-8d5f-3da851c38ea0" />
+
+
 
 ### Core Functionality
 - 📁 **File Compression** - Reduce file size using Huffman Coding algorithm
@@ -270,16 +280,6 @@ d:\7th sem\323nafi project\
 ```
 
 ---
-
-### Landing Page
-   <img width="1904" height="910" alt="Screenshot 2026-05-03 033251" src="https://github.com/user-attachments/assets/150f6602-3dd4-4d11-996d-bfe138461fa3" />
-
-### Compress Interface & Decompress Interface
- 
-      <img width="1899" height="903" alt="Screenshot 2026-05-03 033310" src="https://github.com/user-attachments/assets/77571ce6-e9e8-4e65-9471-c3c1d7076277" />
-
-      <img width="1905" height="908" alt="Screenshot 2026-05-03 033326" src="https://github.com/user-attachments/assets/bc5729ec-1f07-4448-a07a-304518783dfe" />
-
 
 ### Data Structure: Huffman Node
 ```python
