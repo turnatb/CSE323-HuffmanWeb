@@ -13,24 +13,6 @@
 
 ---
 
-## 📋 Table of Contents
-
-- [About](#about)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [How It Works](#how-it-works)
-- [Performance](#performance)
-- [Project Structure](#project-structure)
-- [Screenshots](#screenshots)
-- [Algorithm Details](#algorithm-details)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
 ## 🎯 About
 
 **HuffmanWeb** is a sophisticated file compression web application that brings the power of **Optimal Huffman Coding** to the browser. Designed with privacy and efficiency in mind, all compression and decompression operations happen **locally on your device** with zero data transmission to external servers.
@@ -45,6 +27,9 @@ The application achieves an impressive **57-65% compression ratio** on text file
 - ✅ **Production-Ready** - Comprehensive error handling and edge case testing
 
 ---
+
+## Video
+https://github.com/turnatb/CSE323-HuffmanWeb/blob/main/image/Video%20Project.mp4
 
 ## ✨ Features
 
